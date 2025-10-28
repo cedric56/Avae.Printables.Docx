@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net8.0-browser;net8.0-gtk;net8.0-android;net8.0-ios;net8.0-macos;net8.0-windows10.0.19041.0;</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>1.0.0</Version>
+    <Authors>cedricb</Authors>
+    <PackageId>Avae.Printables.Docx</PackageId>
+    <Product>Avae.Printables.Docx</Product>
+    <Description>Printing for avalonia</Description>
+    <PackageTags>avalonia;printing;crossplatform</PackageTags>
+    <RepositoryUrl>https://github.com/cedric56/Avae.Printables.Docx</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/cedric56/Avae.Printables.Docx</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>Licence.md</PackageLicenseFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avae.Printables" Version="2.0.1" />
+    <PackageReference Include="OpenXmlPowerTools.Core" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="Licence.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
