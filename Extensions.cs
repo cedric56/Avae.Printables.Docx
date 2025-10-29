@@ -1,4 +1,6 @@
 ﻿using Avalonia;
+using OpenXmlPowerTools;
+using SkiaSharp;
 
 namespace Avae.Printables
 {
@@ -10,19 +12,33 @@ namespace Avae.Printables
             if(implementation is null)
                 throw new ArgumentNullException(nameof(implementation), "UsePrintables must be set before.");
 
-#if WINDOWS10_0_19041_0_OR_GREATER ||MACOS || GTK || IOS ||BROWSER || ANDROID
+#if WINDOWS10_0_19041_0_OR_GREATER || MACOS || GTK || IOS || BROWSER || ANDROID
 
             if (implementation is PrintingService service)
             {
 #if WINDOWS10_0_19041_0_OR_GREATER
-                service.Entries.Add(".docx", (title, file) => new HtmlPrinter(PrintingService.GetActiveWindow(), title, DocxHelper.ToHtml(file)));
-#elif MACOS
+
+                service.Conversions.Add(".docx", (file) => HtmlHelper.ConvertToPdf(DocxHelper.ToHtml(file)));
+                if (!Printable.UseEdge)
+                {
+                    service.Entries.Add(".docx", async (title, file) => new PdfPrinter(PrintingService.GetActiveWindow(), title, await HtmlHelper.ConvertToPdf(DocxHelper.ToHtml(file))));
+                }
+                else
+                { 
+                    service.Entries.Add(".docx", async (title, file) =>
+                    {
+                        var printer = new HtmlPrinter(DocxHelper.ToHtml(file));
+                        await printer.ShowPrintUI();
+                        return null!;
+                    });
+                }
+#elif MACOS      
                 service.Entries.Add(".docx", (title, file) => PrintingService.PrintHtml(title, DocxHelper.ToHtml(file)));
-#elif GTK
+#elif GTK    
                 service.Entries.Add(".docx", (title, file) => PrintingService.PrintHtml(title, DocxHelper.ToHtml(file)));
-#elif IOS
+#elif IOS    
                 service.Entries.Add(".docx", (title, file) => PrintingService.PrintHtml(title, DocxHelper.ToHtml(file)));
-#elif BROWSER
+#elif BROWSER        
                 service.Entries.Add(".docx", async (file, stream) =>
                 {
                     if (stream is not null)
@@ -35,10 +51,10 @@ namespace Avae.Printables
                     }
                     return new PrintingService.Response() { Base64 = string.Empty, Stop = true };
                 });
-#elif ANDROID
+#elif ANDROID        
                 service.Entries.Add(".docx", (title, file) => PrintingService.PrintHtml(title, DocxHelper.ToHtml(file)));
 #endif
-            }
+                }
 
 #endif
             return builder;
