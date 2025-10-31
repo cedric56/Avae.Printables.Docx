@@ -4,7 +4,7 @@
     <TargetFrameworks>net8.0;net8.0-browser;net8.0-gtk;net8.0-android;net8.0-ios;net8.0-macos;net8.0-windows10.0.19041.0;</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Authors>cedricb</Authors>
     <PackageId>Avae.Printables.Docx</PackageId>
     <Product>Avae.Printables.Docx</Product>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avae.Printables" Version="3.0.4" />
+    <PackageReference Include="Avae.Printables" Version="3.0.6" />
     <PackageReference Include="OpenXmlPowerTools.Core" Version="1.0.0" />
   </ItemGroup>
 

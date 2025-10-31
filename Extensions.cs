@@ -19,7 +19,7 @@ namespace Avae.Printables
 #if WINDOWS10_0_19041_0_OR_GREATER
 
                 service.Conversions.Add(".docx", (file) => HtmlHelper.ConvertToPdf(DocxHelper.ToHtml(file)));
-                if (!Printable.UseEdge)
+                if (Printable.RENDERING == RENDERING.PDF)
                 {
                     service.Entries.Add(".docx", async (title, file) => new PdfPrinter(PrintingService.GetActiveWindow(), title, await HtmlHelper.ConvertToPdf(DocxHelper.ToHtml(file))));
                 }
@@ -47,7 +47,7 @@ namespace Avae.Printables
                         await stream.CopyToAsync(readWriteStream);
                         readWriteStream.Position = 0; // rewind for use
                         var html = DocxHelper.ToHtml(readWriteStream);
-                        await PrintingService.Invoke(html, null);
+                        await service.PrintAsync(html, null);
                     }
                     return new PrintingService.Response() { Base64 = string.Empty, Stop = true };
                 });
